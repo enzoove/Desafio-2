@@ -26,7 +26,7 @@ class Contenedor
       {
 
       }
-      async getAll()
+      async getAll()// por alguna razon me aparece este mensaje No hay ningún depurador disponible; no se puede enviar "variables".
       {
         try{
             const contenido = await fs.promises.readFile(this.nombreArchivo,'utf-8');
