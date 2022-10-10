@@ -100,9 +100,9 @@ const producto_1 ={
 }
 //file.save(producto_1);
 
-//getByID: "PromiseState: 'pending'"
-const prod = file.getByID(2);
-console.log( prod );
+//getByID: "PromiseState: 'pending'" y tambien vacia el .JSON :(
+//const prod = file.getByID(2);
+//console.log( prod );
 
 //deleteByID
 //file.deleteById(2);
