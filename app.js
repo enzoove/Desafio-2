@@ -7,18 +7,17 @@ class Contenedor
   {
     this.fileName = fileName;
   }
-  
+ 
   async getAll()
   {
     try
     {
-      const content = await fs.promises.readFile(this.fileName,'utf-8');
-      const products = JSON.parse(content);
-
-      return products;
+      const data = await fs.promises.readFile(this.fileName, 'utf-8' );
+      const arrayProducts = json.parse(data);
+      return arrayProducts;
     }catch(err)
     {
-      console.log('No se encontro ningun producto', err);
+      console.log('No se encontro ningun producto',err);
     }
   }
   async deleteAll()
@@ -33,10 +32,39 @@ class Contenedor
       console.log(err);
     }
   }
+  async save(product)
+  {
+    const content = await fs.promises.readFile(this.fileName, 'utf-8' );
+    const arrayProducts = JSON.parse(content);
+
+    const newProduct ={
+      title: product.title,
+      price: product.price,
+      thumbnail: product.thumbnail,
+      ID: arrayProducts[arrayProducts.length-1].ID + 1
+    }
+    arrayProducts.push(newProduct);
+
+    const data = JSON.stringify(arrayProducts, null, '\t');
+    await fs.promises.writeFile(this.fileName,data);
+    {
+      console.log( `${newProduct.title} ha sido guardado correctament!` );
+    }
+    }
 }
 
-const contenedor = new Contenedor('productos.json');
+const file = new Contenedor('productos.json');
 
-console.log( contenedor.getAll() );
 
-//contenedor.deleteAll();
+//getAll: Por alguna razon me dice "json is not defined"
+//console.log( file.getAll() );
+
+//file.deleteAll();
+
+//save
+const producto_1 ={
+  title: "Liquid paper",
+  price: 22,
+  thumbnail: "https://www.distribuidoradales.com/wp-content/uploads/2020/10/PPM0003_Mesa-de-trabajo-1_Mesa-de-trabajo-1_Mesa-de-trabajo-1_Mesa-de-trabajo-1.jpg"
+}
+file.save(producto_1);
